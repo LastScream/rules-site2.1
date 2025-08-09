@@ -1,4 +1,4 @@
-// Аккордеон: открыта только одна категория.
+
 // После открытия — мягко скроллим к началу этой категории (к её заголовку).
 
 const items = Array.from(document.querySelectorAll('.acc-item'));
@@ -67,7 +67,7 @@ function scrollToCategoryStartAfterSettled(item){
   });
 }
 
-// Инициализация
+// Инициализация если ты не знаешь что это такое иди нахуй не трогай ее!!! ДОНТ ПУШ ЗЭЭ ХОРСЕС!!!!
 items.forEach(item => {
   const summary = item.querySelector('.acc-summary');
   const panel   = item.querySelector('.acc-panel');
@@ -101,3 +101,4 @@ window.addEventListener('resize', () => {
     }
   }
 });
+
