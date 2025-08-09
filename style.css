@@ -39,7 +39,7 @@ body{
   box-shadow:0 10px 24px rgba(2,6,23,.05), 0 1px 0 rgba(255,255,255,.8) inset;
 }
 
-/* rail-dot/рельсы больше нет */
+
 .rail-dot{ display:none !important; }
 
 .acc-item{
@@ -144,3 +144,4 @@ a{ color:#3b82f6; text-decoration:underline }
   .points>li{ padding-left:44px }
   .points>li::before{ width:40px }
 }
+
