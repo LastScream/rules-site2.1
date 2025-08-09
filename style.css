@@ -1,0 +1,146 @@
+:root{
+  --bg-1:#f6f8ff;
+  --bg-2:#f9fafb;
+  --ink:#0f172a;
+  --muted:#64748b;
+  --primary:#4f46e5;
+  --panel:#ffffff;
+  --panel-soft:#fbfdff;
+  --border:#e6eaf3;
+  --panel-border:#e9efff;
+  --radius:16px;
+  --maxw:1080px;
+}
+
+*{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+  margin:0;
+  font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.65;
+  background:
+    radial-gradient(1200px 800px at 10% -10%, #eef2ff 0%, transparent 60%),
+    radial-gradient(900px 700px at 110% 0%, #fef3f6 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+}
+
+.wrap{ max-width:var(--maxw); margin:56px auto; padding:0 24px; }
+.page-title{ font-size:clamp(28px,3.6vw,44px); font-weight:800; margin:0 0 20px; color:var(--ink); }
+.page-title1{ font-size:clamp(5px,3.6vw,55px); font-weight:700; margin:0 0 20px; color: #557dff; }
+
+/* Карточка с правилами */
+.accordion{
+  counter-reset:cat;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:8px 16px 18px;
+  box-shadow:0 10px 24px rgba(2,6,23,.05), 0 1px 0 rgba(255,255,255,.8) inset;
+}
+
+/* rail-dot/рельсы больше нет */
+.rail-dot{ display:none !important; }
+
+.acc-item{
+  border-bottom:1px solid var(--border);
+  padding:12px 0;
+  counter-increment:cat;
+}
+.acc-item:last-child{ border-bottom:0 }
+
+/* Заголовок категории — с анимированной левой полосой */
+.acc-summary{
+  position:relative;
+  width:100%;
+  display:flex; align-items:center; gap:12px;
+  cursor:pointer; user-select:none;
+  padding:12px 14px 12px 22px;
+  border:0; background:transparent; text-align:left;
+  border-radius:12px;
+  transition: background-color .22s ease, transform .06s ease;
+}
+.acc-summary:hover{ background:#f6f8ff }
+.acc-summary:active{ transform:translateY(0.5px) }
+.acc-summary:focus-visible{ outline:2px solid #c7d2fe; outline-offset:3px; border-radius:12px; }
+
+/* полоса слева */
+.acc-summary::before{
+  content:"";
+  position:absolute; left:8px; top:10px; bottom:10px;
+  width:4px; border-radius:3px;
+  background:linear-gradient(180deg,#9aa8ff,#4f46e5);
+  transform:scaleY(0);
+  transform-origin:top;
+  transition:transform .25s ease;
+  opacity:.9;
+}
+.acc-item.active .acc-summary::before{ transform:scaleY(1); }
+
+/* Номер и заголовок */
+.cat-num::before{
+  content: counter(cat) ".";
+  font-weight:800; color:var(--primary);
+  font-size:clamp(18px,2.2vw,24px);
+  min-width:32px; display:inline-block;
+}
+.cat-title{
+  font-weight:800; letter-spacing:.2px;
+  font-size:clamp(18px,2.2vw,26px);
+  color:var(--ink);
+}
+
+/* Плюс/крест справа */
+.acc-icon{ margin-left:auto; width:18px; height:18px; position:relative; flex-shrink:0; }
+.acc-icon::before,.acc-icon::after{
+  content:""; position:absolute; inset:0; margin:auto;
+  width:14px; height:2px; background:#9aa4b2; border-radius:2px;
+  transition: transform .2s ease, opacity .2s ease, background .2s ease;
+}
+.acc-icon::after{ transform:rotate(90deg) }
+.acc-item.active .acc-icon::after{ transform:rotate(0); opacity:0 }
+.acc-item.active .acc-icon::before{ background:var(--primary) }
+
+/* Панель контента */
+.acc-panel{
+  overflow:hidden;
+  overflow-anchor:none;    /* отключаем scroll anchoring */
+  max-height:0; opacity:0;
+  margin-top:12px;
+  background:var(--panel-soft);
+  border:1px solid var(--panel-border);
+  border-radius:16px;
+  padding:0 24px;
+  transition:max-height .35s ease, opacity .25s ease, padding .25s ease;
+}
+.acc-item.active .acc-panel{ opacity:1; padding:22px 24px; }
+
+/* Список пунктов 1.1, 1.2 … */
+.points{ margin:0; padding:0; list-style:none; counter-reset:item; }
+.points>li{
+  counter-increment:item;
+  position:relative;
+  padding-left:56px;
+  margin:18px 0;
+  color:#334155;
+  font-size:clamp(14px,1.4vw,18px);
+}
+.points>li::before{
+  content: counter(cat) "." counter(item);
+  position:absolute; left:0; top:0.05em; width:48px;
+  font-weight:800; color:#111827; opacity:.65;
+}
+
+/* Тексты */
+a{ color:#3b82f6; text-decoration:underline }
+.muted{ color:var(--muted); display:block; margin-top:4px }
+.warn{ color:#dc2626; display:block; margin-top:4px; font-weight:400 }
+.warn b{ font-weight:800 }
+
+/* адаптив */
+@media (max-width:560px){
+  .acc-panel{ padding:0 18px }
+  .acc-item.active .acc-panel{ padding:18px }
+  .points>li{ padding-left:44px }
+  .points>li::before{ width:40px }
+}
